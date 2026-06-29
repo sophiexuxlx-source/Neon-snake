@@ -1,0 +1,212 @@
+:root {
+    --bg-color: #0f172a;
+    --board-bg: #1e293b;
+    --text-color: #f8fafc;
+    --accent-color: #10b981;
+    --accent-glow: rgba(16, 185, 129, 0.5);
+    --snake-color: #34d399;
+    --snake-head: #10b981;
+    --food-color: #f43f5e;
+    --food-glow: rgba(244, 63, 94, 0.6);
+    --overlay-bg: rgba(15, 23, 42, 0.85);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+}
+
+.game-container {
+    background: rgba(30, 41, 59, 0.5);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--accent-color), #3b82f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.scores {
+    display: flex;
+    gap: 1rem;
+}
+
+.score-box {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 0.25rem;
+}
+
+#score, #high-score {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+main {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+canvas {
+    background-color: var(--board-bg);
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 15px var(--accent-glow);
+}
+
+.overlay p {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #cbd5e1;
+}
+
+button {
+    font-family: inherit;
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--accent-glow);
+    background: #059669;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.controls p {
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.d-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.d-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.d-btn {
+    padding: 0.75rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    color: var(--text-color);
+    box-shadow: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.d-btn:hover {
+    background: rgba(51, 65, 85, 0.8);
+}
+
+.d-btn:active {
+    background: var(--accent-color);
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .d-pad {
+        display: none;
+    }
+}

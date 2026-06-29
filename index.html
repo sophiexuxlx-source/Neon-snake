@@ -3,180 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A professional Canadian Marginal Tax and RRSP Savings Calculator. Compute combined federal and provincial tax liabilities for Ontario, British Columbia, Quebec, and Alberta.">
-    <title>Canadian Marginal Tax & RRSP Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts for premium typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Neon Snake</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="logo-container">
-                <span class="logo-icon">🍁</span>
-                <h1>TaxFlow Canada</h1>
+    <div class="game-container">
+        <header>
+            <h1>Neon Snake</h1>
+            <div class="scores">
+                <div class="score-box">
+                    <span class="label">Score</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="label">High Score</span>
+                    <span id="high-score">0</span>
+                </div>
             </div>
-            <p class="subtitle">Marginal Tax & RRSP Contribution Planner (2025 Tax Year)</p>
         </header>
-
-        <!-- Main Content Grid -->
-        <main class="app-main">
-            <!-- Left Side: Inputs Card -->
-            <section class="card input-card">
-                <h2>Financial Details</h2>
-                <p class="card-description">Enter your current income details and planned RRSP contributions to estimate your taxes and net savings.</p>
-                
-                <form id="tax-form" onsubmit="event.preventDefault();">
-                    <!-- Income Input -->
-                    <div class="form-group">
-                        <label for="annual-income">Annual Taxable Income (Before RRSP)</label>
-                        <div class="input-prefix-container">
-                            <span class="currency-symbol">$</span>
-                            <input type="number" id="annual-income" value="95000" min="0" step="1000" required>
-                        </div>
-                        <span class="input-hint">Employment income, self-employment net, etc.</span>
-                    </div>
-
-                    <!-- Province Selector -->
-                    <div class="form-group">
-                        <label for="province">Province of Residence (on Dec 31)</label>
-                        <select id="province" required>
-                            <option value="ON" selected>Ontario (ON)</option>
-                            <option value="BC">British Columbia (BC)</option>
-                            <option value="QC">Quebec (QC)</option>
-                            <option value="AB">Alberta (AB)</option>
-                        </select>
-                        <span class="input-hint">Tax rates depend on your province of residence.</span>
-                    </div>
-
-                    <!-- RRSP Contribution -->
-                    <div class="form-group">
-                        <label for="rrsp-contribution">Planned RRSP Contribution</label>
-                        <div class="input-prefix-container">
-                            <span class="currency-symbol">$</span>
-                            <input type="number" id="rrsp-contribution" value="10000" min="0" step="500">
-                        </div>
-                        <span class="input-hint">Maximum limit is typically 18% of prior year's earned income.</span>
-                    </div>
-
-                    <!-- Reset & Calculate Trigger Button -->
-                    <div class="button-group">
-                        <button type="button" id="btn-calculate" class="btn btn-primary">Calculate Taxes</button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- Right Side: Results Cards -->
-            <div class="results-container">
-                <!-- KPI Dashboard Grid -->
-                <section class="kpi-grid">
-                    <!-- Marginal Rate Card -->
-                    <div class="kpi-card highlight-green">
-                        <span class="kpi-label">Marginal Tax Rate</span>
-                        <div class="kpi-value" id="val-marginal-rate">0.00%</div>
-                        <span class="kpi-subtext" id="lbl-marginal-desc">Tax paid on your next dollar of income</span>
-                    </div>
-
-                    <!-- RRSP Tax Savings Card -->
-                    <div class="kpi-card highlight-purple">
-                        <span class="kpi-label">RRSP Tax Savings</span>
-                        <div class="kpi-value" id="val-rrsp-savings">$0.00</div>
-                        <span class="kpi-subtext" id="lbl-rrsp-efficiency">Effective savings rate of 0.00%</span>
-                    </div>
-
-                    <!-- Net Tax Bill Card -->
-                    <div class="kpi-card">
-                        <span class="kpi-label">Estimated Net Tax Bill</span>
-                        <div class="kpi-value" id="val-net-tax">$0.00</div>
-                        <span class="kpi-subtext" id="lbl-tax-reduction">After RRSP deduction applied</span>
-                    </div>
-
-                    <!-- Average Tax Rate Card -->
-                    <div class="kpi-card">
-                        <span class="kpi-label">Average Tax Rate</span>
-                        <div class="kpi-value" id="val-average-rate">0.00%</div>
-                        <span class="kpi-subtext" id="lbl-take-home">Take-home pay: 0.00%</span>
-                    </div>
-                </section>
-
-                <!-- Detailed Breakdown Section -->
-                <section class="card results-detail-card">
-                    <h2>Tax Breakdown & Comparison</h2>
-                    
-                    <div class="comparison-table-wrapper">
-                        <table class="comparison-table">
-                            <thead>
-                                <tr>
-                                    <th>Calculation Metric</th>
-                                    <th>Before RRSP</th>
-                                    <th>After RRSP</th>
-                                    <th>Net Change</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="row-title">Gross Taxable Income</td>
-                                    <td id="table-income-before">$0.00</td>
-                                    <td id="table-income-after" class="text-positive">$0.00</td>
-                                    <td id="table-income-diff" class="text-positive">$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="row-title">Federal Income Tax</td>
-                                    <td id="table-fed-before">$0.00</td>
-                                    <td id="table-fed-after">$0.00</td>
-                                    <td id="table-fed-diff">$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="row-title" id="lbl-prov-tax-name">Provincial Income Tax</td>
-                                    <td id="table-prov-before">$0.00</td>
-                                    <td id="table-prov-after">$0.00</td>
-                                    <td id="table-prov-diff">$0.00</td>
-                                </tr>
-                                <tr class="total-row">
-                                    <td class="row-title">Total Tax Liability</td>
-                                    <td id="table-total-before">$0.00</td>
-                                    <td id="table-total-after">$0.00</td>
-                                    <td id="table-total-diff" class="text-positive">$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="row-title">After-Tax Disposable Income</td>
-                                    <td id="table-disposable-before">$0.00</td>
-                                    <td id="table-disposable-after">$0.00</td>
-                                    <td id="table-disposable-diff" class="text-positive">$0.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Split chart Visualizer -->
-                    <div class="visualizer-section">
-                        <h3>Federal vs. Provincial Tax Split</h3>
-                        <div class="bar-chart-container">
-                            <div class="stacked-bar">
-                                <div id="chart-fed-bar" class="chart-segment fed-segment" style="width: 50%;">
-                                    <span class="segment-label" id="chart-fed-label">Federal (50%)</span>
-                                </div>
-                                <div id="chart-prov-bar" class="chart-segment prov-segment" style="width: 50%;">
-                                    <span class="segment-label" id="chart-prov-label">Provincial (50%)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+        <main>
+            <canvas id="game-board" width="400" height="400"></canvas>
+            <div id="game-over" class="hidden overlay">
+                <h2>Game Over!</h2>
+                <p>Your Score: <span id="final-score">0</span></p>
+                <button id="restart-btn">Play Again</button>
+            </div>
+            <div id="start-screen" class="overlay">
+                <h2>Ready?</h2>
+                <button id="start-btn">Start Game</button>
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>Calculations are based on 2025 personal income tax rates for Canada. Results are estimates and do not include secondary tax credits, health premiums (except Ontario Health Premium approximations), or special deductions.</p>
-            <p class="disclaimer"><strong>Disclaimer:</strong> This tool is for educational and tax planning purposes only. Consult the Canada Revenue Agency (CRA) or a licensed CPA for professional tax advice.</p>
-        </footer>
+        <div class="controls">
+            <p>Use Arrow Keys or WASD to Move</p>
+            <div class="d-pad">
+                <button id="btn-up" class="d-btn">▲</button>
+                <div class="d-row">
+                    <button id="btn-left" class="d-btn">◀</button>
+                    <button id="btn-down" class="d-btn">▼</button>
+                    <button id="btn-right" class="d-btn">▶</button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Application Script -->
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
